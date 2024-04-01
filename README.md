@@ -1,4 +1,15 @@
+# ST-4 UNIT-тестирование с использованием MSTest в среде .NET
 
+
+![GitHub pull requests](https://img.shields.io/github/issues-pr/UNN-CS/ST-4)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed/UNN-CS/ST-4)
+
+Срок выполнения задания:
+
+**по 07.04.24** ![Relative date](https://img.shields.io/date/1712523600)
+
+
+## Задание
 ```csharp
 using Stateless;
 
