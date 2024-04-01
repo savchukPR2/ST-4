@@ -1,4 +1,4 @@
-# ST-4 UNIT-тестирование с использованием MSTest в среде .NET
+# ST-4 Модульное тестирование в .NET Core с использованием MSTest (C#)
 
 
 ![GitHub pull requests](https://img.shields.io/github/issues-pr/UNN-CS/ST-4)
