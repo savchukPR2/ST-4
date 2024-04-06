@@ -5,84 +5,85 @@ namespace BugTests
     [TestClass]
     public class UnitTest1
     {
+
         [TestMethod]
-        public void TestOpenToAssigned()
+        public void TestToClosed()
         {
-            var bug = new Bug(Bug.State.Open);
-            bug.Assign();
-            Assert.AreEqual(Bug.State.Assigned, bug.getState());
+            var a = new Bug(Bug.State.Assigned);
+            a.Close();
+            Assert.AreEqual(Bug.State.Closed, a.getState());
         }
 
         [TestMethod]
-        public void TestAssignedToClosed()
+        public void ToDeferred()
         {
-            var bug = new Bug(Bug.State.Assigned);
-            bug.Close();
-            Assert.AreEqual(Bug.State.Closed, bug.getState());
+            var a = new Bug(Bug.State.Assigned);
+            a.Defer();
+            Assert.AreEqual(Bug.State.Defered, a.getState());
         }
 
         [TestMethod]
-        public void TestAssignedToDeferred()
+        public void DeferredToAssigned()
         {
-            var bug = new Bug(Bug.State.Assigned);
-            bug.Defer();
-            Assert.AreEqual(Bug.State.Defered, bug.getState());
+            var a = new Bug(Bug.State.Defered);
+            a.Assign();
+            Assert.AreEqual(Bug.State.Assigned, a.getState());
         }
 
         [TestMethod]
-        public void TestClosedToAssigned()
+        public void AssignIgnoredInAssignedState()
         {
-            var bug = new Bug(Bug.State.Closed);
-            bug.Assign();
-            Assert.AreEqual(Bug.State.Assigned, bug.getState());
+            var a = new Bug(Bug.State.Assigned);
+            a.Assign();
+            Assert.AreEqual(Bug.State.Assigned, a.getState());
         }
 
         [TestMethod]
-        public void TestDeferredToAssigned()
+        public void ComplexScenario()
         {
-            var bug = new Bug(Bug.State.Defered);
-            bug.Assign();
-            Assert.AreEqual(Bug.State.Assigned, bug.getState());
+            var a = new Bug(Bug.State.Open);
+            a.Assign();
+            a.Defer();
+            a.Assign();
+            a.Close();
+            Assert.AreEqual(Bug.State.Closed, a.getState());
         }
 
         [TestMethod]
-        public void TestAssignIgnoredInAssignedState()
+        public void OpenToAssigned()
         {
-            var bug = new Bug(Bug.State.Assigned);
-            bug.Assign();
-            Assert.AreEqual(Bug.State.Assigned, bug.getState());
+            var a = new Bug(Bug.State.Open);
+            a.Assign();
+            Assert.AreEqual(Bug.State.Assigned, a.getState());
         }
 
         [TestMethod]
-        public void TestComplexScenario()
+        public void CloseFromOpenThrowsException()
         {
-            var bug = new Bug(Bug.State.Open);
-            bug.Assign();
-            bug.Defer();
-            bug.Assign();
-            bug.Close();
-            Assert.AreEqual(Bug.State.Closed, bug.getState());
+            var a = new Bug(Bug.State.Open);
+            Assert.ThrowsException<InvalidOperationException>(() => a.Close());
         }
 
         [TestMethod]
-        public void TestCloseFromOpenThrowsException()
+        public void DeferFromOpenThrowsException()
         {
-            var bug = new Bug(Bug.State.Open);
-            Assert.ThrowsException<InvalidOperationException>(() => bug.Close());
+            var a = new Bug(Bug.State.Open);
+            Assert.ThrowsException<InvalidOperationException>(() => a.Defer());
         }
 
         [TestMethod]
-        public void TestDeferFromOpenThrowsException()
+        public void CloseFromDeferredThrowsException()
         {
-            var bug = new Bug(Bug.State.Open);
-            Assert.ThrowsException<InvalidOperationException>(() => bug.Defer());
+            var a = new Bug(Bug.State.Defered);
+            Assert.ThrowsException<InvalidOperationException>(() => a.Close());
         }
 
         [TestMethod]
-        public void TestCloseFromDeferredThrowsException()
+        public void ClosedToAssigned()
         {
-            var bug = new Bug(Bug.State.Defered);
-            Assert.ThrowsException<InvalidOperationException>(() => bug.Close());
+            var a = new Bug(Bug.State.Closed);
+            a.Assign();
+            Assert.AreEqual(Bug.State.Assigned, a.getState());
         }
     }
 }
